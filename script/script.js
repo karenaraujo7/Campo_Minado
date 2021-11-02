@@ -1,57 +1,57 @@
 const bomba = '💣'; 
 
+let rows = [];
 
-
-function field(linhas, colunas, minas) {
-    let celulas = [];
-    for (let i = 0; i < linhas;  i++) {
-        let rows = []; //linhas vazias
-        celulas.push(rows);
-        for( let j = 0; j < colunas; j++) {
-            let cols = [];
-            rows.push(cols);
+function field(rows_count, cols_count, minas) {
+    
+    for (let i = 0; i < rows_count;  i++) {
+        rows[i] = []; //linhas vazias
+        for(let j = 0; j < cols_count; j++) {
             if (minas.map(currentElement => JSON.stringify(currentElement)).includes('['+i+','+j+']')) {
-                celulas[i][j] = bomba;
+                rows[i][j] = bomba;
             } else {
-                celulas[i][j] = 0;
+                rows[i][j] = 0;
             }
+        } 
+    } 
 
-            if (celulas[i][j] != bomba) {
-               
-                if (celulas[i - 1] !== undefined && celulas[i-1][j-1] === bomba) {
-                    celulas[i][j]++;
-                } 
-                if (celulas[i - 1] !== undefined && celulas[i-1][j] === bomba){
-                    celulas[i][j]++;
-                } 
-              
-                if (celulas[i-1] !== undefined && celulas[i-1][j+1] === bomba) {
-                    celulas[i][j]++;
-                }
-
-                if (celulas[i][j-1] === bomba)  {
-                    celulas[i][j]++;
-                }
-                if (celulas[i][j+1] === bomba) {
-                    celulas[i][j]++;
-                }
-
-                if (celulas[i+1] !== undefined && celulas[i+1][j-1] === bomba){
-                    celulas[i][j]++;
-                } 
-                if (celulas[i+1] !== undefined && celulas[i+1][j] === bomba) {
-                    celulas[i][j]++;
-                }
-                if (celulas[i+1] !== undefined && celulas[i+1][j+1] === bomba){
-                    celulas[i][j]++;
-                }
-          }
+    for (let i = 0; i < rows_count; i++){
+        for (let j = 0; j < cols_count; j++){
+            if (rows[i][j] != bomba) {  
+                if (rows[i - 1] !== undefined && rows[i - 1][j - 1] === bomba) {
+                    rows[i][j]++;
+                }; 
+                if (rows[i - 1] !== undefined && rows[i - 1][j] === bomba){
+                    rows[i][j]++;
+                }; 
+                if (rows[i - 1] !== undefined && rows[i - 1][j + 1] === bomba) {
+                    rows[i][j]++;
+                };
+   
+                if (rows[i][j - 1] === bomba)  {
+                    rows[i][j]++;
+                };
+                if (rows[i][j + 1] === bomba) {
+                    rows[i][j]++;
+                };
+   
+                if (rows[i + 1] !== undefined && rows[i + 1][j - 1] === bomba){
+                    rows[i][j]++;
+                }; 
+                if (rows[i + 1] !== undefined && rows[i + 1][j] === bomba) {
+                    rows[i][j]++;
+                };
+                if (rows[i + 1] !== undefined && rows[i + 1][j + 1] === bomba){
+                    rows[i][j]++;
+                }; 
+            }    
         }
-    }
-        return celulas;
+            
+    }  
+    return rows;    
 }
 
- 
+
 
 function drawTable(colunas) {
     let table = document.getElementById('campo');
@@ -80,6 +80,6 @@ function mines(quantidade, linhas, colunas) {  //criação de um array de minas 
     return minas;
 }
 
-let minas = mines(30, 11, 11);
+let minas = mines(30, 11, 11); 
 let campo = field(10, 10, minas)
 drawTable(campo)
