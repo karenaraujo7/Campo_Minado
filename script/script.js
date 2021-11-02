@@ -1,48 +1,61 @@
 const bomba = '💣'; 
 
+
+
 function field(linhas, colunas, minas) {
-    let rows = []; //linhas vazias
-    
-    for (let i = 0; i < linhas; i++) {
-        rows[i] = []; //linha vazia no indice
+    let celulas = [];
+    for (let i = 0; i < linhas;  i++) {
+        let rows = []; //linhas vazias
+        celulas.push(rows);
         for( let j = 0; j < colunas; j++) {
-            if (minas.map(currentElement => JSON.stringify(currentElement)).includes("["+i+","+j+"]")) {   // verificar se o par de array existe no array de minas,
-                rows[i][j] = bomba;
+            let cols = [];
+            rows.push(cols);
+            if (minas.map(currentElement => JSON.stringify(currentElement)).includes('['+i+','+j+']')) {
+                celulas[i][j] = bomba;
             } else {
-                rows[i][j] = 0;
+                celulas[i][j] = 0;
             }
+
+            if (celulas[i][j] != bomba) {
+               
+                if (celulas[i - 1] !== undefined && celulas[i-1][j-1] === bomba) {
+                    celulas[i][j]++;
+                } 
+                if (celulas[i - 1] !== undefined && celulas[i-1][j] === bomba){
+                    celulas[i][j]++;
+                } 
+              
+                if (celulas[i-1] !== undefined && celulas[i-1][j+1] === bomba) {
+                    celulas[i][j]++;
+                }
+
+                if (celulas[i][j-1] === bomba)  {
+                    celulas[i][j]++;
+                }
+                if (celulas[i][j+1] === bomba) {
+                    celulas[i][j]++;
+                }
+
+                if (celulas[i+1] !== undefined && celulas[i+1][j-1] === bomba){
+                    celulas[i][j]++;
+                } 
+                if (celulas[i+1] !== undefined && celulas[i+1][j] === bomba) {
+                    celulas[i][j]++;
+                }
+                if (celulas[i+1] !== undefined && celulas[i+1][j+1] === bomba){
+                    celulas[i][j]++;
+                }
+          }
         }
-        //return rows[i][j];
     }
-
-    // * * * -> [i-1,j-1] [i-1,j] [i-1,j+1]
-    // * * * -> [i,  j-1] [i,  j] [i,  j+1]
-    // * * * -> [i+1,j-1] [i+1,j] [i+1,j+1]
-
-
-    
-    for (let i = 0; i < linhas; i++) {
-        for (let j = 0; j < colunas; j++) {
-            if (rows[i][j] !== bomba) { 
-                 if (rows[i - 1] !== undefined && rows[i - 1][j - 1] === bomba) rows[i][j]++; 
-                 if (rows[i - 1] !== undefined && rows[i - 1][j] === bomba) rows[i][j]++;
-                 if (rows[i - 1] !== undefined && rows[i - 1][j + 1] === bomba) rows[i][j]++;
-
-                 if (rows[i][j - 1] === bomba) rows[i][j]++;
-                 if (rows[i][j + 1] === bomba) rows[i][j]++;
-
-                 if (rows[i + 1] !== undefined && rows[i + 1][j - 1] === bomba) rows[i][j]++;
-                 if (rows[i + 1] !== undefined && rows[i + 1][j] === bomba) rows[i][j]++;
-                 if (rows[i + 1] !== undefined && rows[i + 1][j + 1] === bomba) rows[i][j]++;
-            }
-        }
-        return rows;
-    }   
+        return celulas;
 }
 
-function drawTable(linhas) {
+ 
+
+function drawTable(colunas) {
     let table = document.getElementById('campo');
-    for (let row of linhas) {
+    for (let row of colunas) {
         let tr = document.createElement('tr');
         for (let col of row) {
             let td = document.createElement('td');
@@ -57,6 +70,16 @@ function drawTable(linhas) {
     }
 }
 
-let minas = [[0,1], [3,2]]
-let myField = field(11, 11, minas)
-drawTable(myField)
+function mines(quantidade, linhas, colunas) {  //criação de um array de minas aleatorias 
+    let minas = [];
+    for(let i = 0; i < quantidade; i++) {
+        let randomLine = parseInt(Math.random() * linhas)
+        let randomCol = parseInt(Math.random() * colunas)
+        minas.push([randomLine, randomCol])
+    }
+    return minas;
+}
+
+let minas = mines(30, 11, 11);
+let campo = field(10, 10, minas)
+drawTable(campo)
