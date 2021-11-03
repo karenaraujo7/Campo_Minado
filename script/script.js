@@ -52,22 +52,39 @@ function field(rows_count, cols_count, minas) {
 }
 
 
-
-function drawTable(colunas) {
+function drawTable(rows) {
     let table = document.getElementById('campo');
-    for (let row of colunas) {
+    for (let linha of rows) {
         let tr = document.createElement('tr');
-        for (let col of row) {
+        for (let col of linha) {
             let td = document.createElement('td');
-            //let span = document.createElement('span');
-            //span.setAttribute('class', 'invisivel')
-            td.textContent = col;
-            //td.appendChild(span);
+            let span = document.createElement('span');
+            span.setAttribute('class', 'invisivel')
+            span.textContent = col;
+            td.appendChild(span);
             tr.appendChild(td);
-            //td.addEventListener('click', mostrar)
+            td.addEventListener('click', mostrar)
         }
         table.appendChild(tr);
     }
+}
+
+function mostrar(event) {
+    if (event.target.textContent === bomba) {
+       
+        for(let elemento of document.querySelectorAll('span')) {
+            elemento.setAttribute('class', 'visible')
+        }
+        divOver.innerHTML += '<h2>Game Over</h2> <button type="button" id="start-again" onclick="play()">Start Again</button>'
+
+    } else {
+        event.target.childNodes[0].setAttribute('class', 'visible')
+    }
+}
+
+let divOver = document.getElementById('game-over')
+function play() {
+    window.location.reload();
 }
 
 function mines(quantidade, linhas, colunas) {  //criação de um array de minas aleatorias 
@@ -80,6 +97,6 @@ function mines(quantidade, linhas, colunas) {  //criação de um array de minas 
     return minas;
 }
 
-let minas = mines(30, 11, 11); 
+let minas = mines(15, 10, 10); 
 let campo = field(10, 10, minas)
 drawTable(campo)
