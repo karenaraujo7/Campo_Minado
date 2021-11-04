@@ -71,11 +71,19 @@ function drawTable(rows) {
 
 function mostrar(event) {
     if (event.target.textContent === bomba) {
-       
+        let divGo = document.getElementById('game-over')
+        divGo.classList.replace('invisivel', 'visible')
+
+        let audio = document.createElement('audio')
+        audio.setAttribute('class', 'invisivel')
+
+        divOver.innerHTML += '<audio autoplay src="./audio/explosao.mp3"></audio>'
+
         for(let elemento of document.querySelectorAll('span')) {
             elemento.setAttribute('class', 'visible')
         }
-        divOver.innerHTML += '<h2>Game Over</h2> <button type="button" id="start-again" onclick="play()">Start Again</button>'
+
+        
 
     } else {
         event.target.childNodes[0].setAttribute('class', 'visible')
