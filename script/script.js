@@ -1,11 +1,13 @@
 const bomba = '💣'; 
+let resultado = document.getElementById('resultado')
+let elementosInvisiveis = document.getElementsByClassName('invisivel')
 
 let rows = [];
 
 function field(rows_count, cols_count, minas) {
     
     for (let i = 0; i < rows_count;  i++) {
-        rows[i] = []; //linhas vazias
+        rows[i] = []; 
         for(let j = 0; j < cols_count; j++) {
             if (minas.map(currentElement => JSON.stringify(currentElement)).includes('['+i+','+j+']')) {
                 rows[i][j] = bomba;
@@ -70,32 +72,30 @@ function drawTable(rows) {
 }
 
 function mostrar(event) {
+    vitoria();
     if (event.target.textContent === bomba) {
-        let divGo = document.getElementById('game-over')
-        divGo.classList.replace('invisivel', 'visible')
+        
+        resultado.classList.replace('invisivel2', 'visible')
 
         let audio = document.createElement('audio')
         audio.setAttribute('class', 'invisivel')
 
-        divOver.innerHTML += '<audio autoplay src="./audio/explosao.mp3"></audio>'
+        resultado.innerHTML += '<audio autoplay src="./audio/explosao.mp3"></audio>'
 
         for(let elemento of document.querySelectorAll('span')) {
             elemento.setAttribute('class', 'visible')
         }
-
-        
-
     } else {
         event.target.childNodes[0].setAttribute('class', 'visible')
     }
+    
 }
 
-let divOver = document.getElementById('game-over')
 function play() {
     window.location.reload();
 }
 
-function mines(quantidade, linhas, colunas) {  //criação de um array de minas aleatorias 
+function mines(quantidade, linhas, colunas) { 
     let minas = [];
     for(let i = 0; i < quantidade; i++) {
         let randomLine = parseInt(Math.random() * linhas)
@@ -104,7 +104,17 @@ function mines(quantidade, linhas, colunas) {  //criação de um array de minas 
     }
     return minas;
 }
+ 
+function vitoria() {
+    let h2 = document.getElementById('res')
+    if (elementosInvisiveis.length === 3){
+        h2.innerHTML = '<img class="resultado" src="./imagens/you-win1.png" alt="YOU WIN">'
+        resultado.classList.replace('invisivel2', 'visible')
+    }
+}
 
-let minas = mines(15, 10, 10); 
-let campo = field(10, 10, minas)
+let minas = mines(3, 5, 5);
+let campo = field(5, 5, minas)
 drawTable(campo)
+
+

@@ -34,21 +34,25 @@ td {
     /* background-image: url('../imagens/grama.jpg'); */
 }
 
-#game-over {
+#resultado {
     text-align: center;
 } 
 
-.game-over {
+.resultado {
     width: 40%;
 }
 
-#game-over button {
-    margin: 0 0 10px 0;
+#resultado button {
+    margin: 0 0 20px 0;
     padding: 5px 10px;
     font-size: 14px;
 }
 
 .invisivel {
+    visibility: hidden;
+}
+
+.invisivel2 {
     visibility: hidden;
 }
 
