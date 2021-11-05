@@ -107,14 +107,14 @@ function mines(quantidade, linhas, colunas) {
  
 function vitoria() {
     let h2 = document.getElementById('res')
-    if (elementosInvisiveis.length === 3){
+    if (elementosInvisiveis.length === 10){
         h2.innerHTML = '<img class="resultado" src="./imagens/you-win1.png" alt="YOU WIN">'
         resultado.classList.replace('invisivel2', 'visible')
     }
 }
 
-let minas = mines(3, 5, 5);
-let campo = field(5, 5, minas)
+let minas = mines(10, 9, 9);
+let campo = field(9, 9, minas)
 drawTable(campo)
 
 
