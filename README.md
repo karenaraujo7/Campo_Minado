@@ -10,3 +10,7 @@ O projeto é uma réplica do jogo Campo Minado, que utiliza de lógica para venc
 Vamos jogar?
 
 **[Slide](https://docs.google.com/presentation/d/1nWqq528vGGsAKuYucv57sKlGUWtqLDOoT2tJwTcZQas/edit#slide=id.g1f5a554dbf_0_308)**
+
+## JOGAR ---
+
+(https://karenaraujo7.github.io/Campo_Minado/)
